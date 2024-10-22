@@ -1,0 +1,68 @@
+/* New grid container */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+    height: calc(100vh - 130px); /* Adjusted for the navbar */
+    width: 100vw;  /* Full width of the viewport */
+    box-sizing: border-box;
+}
+
+/* Grid item styling */
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Media query for screens below 600px (for one column layout) */
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr); /* Adjusts to 4 rows on small screens */
+        height: calc(100vh - 50px); /* Adjusted for the navbar */
+        width: 100vw;
+    }
+}
+
+/* Existing table and bathroom styles */
+table {
+    width: 100%;
+    height: 100%;
+}
+
+table.layout {
+    height: 100%;
+}
+
+table tr {
+    width: 33%;
+}
+
+div.bathroom1 {
+    background-color: black;
+}
+
+div.bathroom1 tr, div.bathroom1 h1 {
+    color: white;
+}
+
+div.bathroom2 {
+    background-color: yellow;
+}
+
+div.bathroom3 {
+    background-color: green;
+}
+
+div.bathroom4 {
+    background-color: yellowgreen;
+}
+
+table tr.row2 td, table tr.row3 td, table tr.row4 td {
+    text-align: center;
+}
