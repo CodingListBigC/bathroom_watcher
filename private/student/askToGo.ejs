@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Pass</title>
+</head>
+<body>
+    <%- include('../navbar', { user: user }) %>
+    
+    <h1>Make a Pass</h1>
+    <p>Sending to <%= user.classroom %></p>
+    <form action="/add_pass" method="post">
+        <label for="leaving">Classroom Leaving: </label>
+        <input type="text" id="leaving"><br>
+        <label for="going">Going To: </label>
+        <input type="text" id="going"><br>
+        <label for="importants">Important:</label>
+        <input type="range" name="importants" id="importants" min="0",max="5">
+        <button type="submit">Send Pass</button>
+    </form>
+</body>
+</html>

@@ -74,7 +74,13 @@ app.get('/login', (req, res) => {
 // Login POST route
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-
+    /*
+        req.session.user = {
+            email = Student Email Address
+            teacher = Teel if teacher or not
+            pass_input = Do you have a pass actice right now - Teacher are -1
+        }
+    */
     db.get(
         'SELECT * FROM students WHERE username = ? AND password = ?',
         [username, password],
@@ -87,9 +93,10 @@ app.post('/login', (req, res) => {
                 req.session.user = {
                     username: row.username,
                     name: row.name,
-                    email: row.email,
+                    email: row.email, 
                     classroom: row.classroom,
-                    teacher: false // Ensure this field exists in your db
+                    teacher: false,
+                    pass_input: 0 
                 };
                 res.redirect("/dashboard")
             } else {
@@ -107,7 +114,8 @@ app.post('/login', (req, res) => {
                                 name: row.name,
                                 email: row.email,
                                 classroom: row.classroom,
-                                teacher: true // Ensure this field exists in your db
+                                teacher: true,
+                                pass_input: -1
                             };
                             console.log(req.session.user);
                             res.redirect("/dashboard")
