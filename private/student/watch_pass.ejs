@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Centered Navigation Bar</title>
+    </head>
+
+    <body>
+        <%- include('../navbar', { user: user }) %>
+
+        <div class="main">
+            <h2>Watch Pass</h2>
+            <p>
+                You are watching pass for <%= user.name %>.
+                <% if (user.pass.restroom) { %>
+                    <p>Restroom pass is active.</p>
+                    <p>Start time: <%= new Date(user.pass.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></p>
+                <% } else { %>
+                    <p>No active restroom pass.</p>
+                <% } %>
+                You can remove your pass. <a href="/student/student_remove_pass">Remove Pass</a>
+            </p>
+        </div>
+    </body>
+</html>

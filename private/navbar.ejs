@@ -1,0 +1,75 @@
+<nav>
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <% if (user.teacher) { %>
+    <!-- Teacher Navbar -->
+    <div class="mobile_navbar">
+        <div class="topnav">
+            <a href="/dashboard" class="active">Pass Manger</a>
+            <div id="myLinks">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/pass_watch">Pass Watcher</a>
+                <a href="/classroom">Classroom Manage</a>
+                <a href="/account">Account: <%= user.name %></a>
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+    <div class="computer_navbar">
+        <ul class="menu-list">
+            <li class="center"><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/pass_watch">Pass Watcher</a></li>
+            <li><a href="/classroom">Classroom Manage</a></li>
+            <li class="right">
+                <a href="/account">Account: <%= user.name %></a>
+            </li>
+        </ul>
+    </div>
+    <% } else { %>
+    <!-- Student Navbar -->
+    <div class="mobile_navbar">
+        <div class="topnav">
+            <a href="/dashboard" class="active">Pass Manger</a>
+            <div id="myLinks">
+                <a href="/student/pass_list">
+                    <% if (user.pass) {%> View Pass <%} else {%> Pass List <%}%>
+                </a>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/account">Account: <%= user.name %></a>
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+    <div class="computer_navbar">
+        <ul class="menu-list">
+            <li>
+                <a href="/student/pass_list"
+                    ><% if (user.pass) {%> View Pass <%} else {%> Pass List
+                    <%}%></a
+                >
+            </li>
+            <li class="center"><a href="/dashboard">Dashboard</a></li>
+            <li class="right">
+                <a href="/account">Account: <%= user.name %></a>
+            </li>
+        </ul>
+    </div>
+    <% } %>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+    </script>
+</nav>

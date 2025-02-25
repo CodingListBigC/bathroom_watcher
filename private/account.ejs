@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Navigation Bar</title>
+</head>
+
+<body>
+    <%- include('./navbar', { user: user }) %>
+
+    <div class="main">
+        <div class="grid-container">
+            <div class="grid-item">
+
+
+                <h1>Account Page</h1>
+                <div class="account_information">
+                    <h2>Account Information</h2>
+                    <p>
+                        Enail: <span id="emailDisplay"></span><br>
+                        Classroom: <span id="classroomDisplay"></span><br>
+                    </p>
+                </div>
+                <form action="/update-classroom" method="post">
+                    <label for="newclassroom_input">New Classroom</label>
+                    <input type="text" name="newclassroom_input" id="newclassroom_input"><br>
+                    <button type="submit">Change New Class</button>
+                </form>
+                <br />
+                <form action="/logout">
+                    <button type="submit">LogOut</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        fetch('/current-user-name')
+            .then(response => response.text()) // Change this to .text() to handle plain text response
+            .then(data => {
+                console.log(data);
+                if (data !== 'Not logged in') {
+                    document.getElementById('usernameDisplay').innerText = data; // Display the name directly
+                } else {
+                    document.getElementById('usernameDisplay').innerText = data; // Update message if no user
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching current user:', error); // Log any errors
+            });
+
+
+        fetch('/current-user-email')
+            .then(response => response.text()) // Change this to .text() to handle plain text response
+            .then(data => {
+                console.log(data);
+                if (data !== 'Not logged in') {
+                    document.getElementById('emailDisplay').innerText = data; // Display the name directly
+                } else {
+                    document.getElementById('emailDisplay').innerText = data; // Update message if no user
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching current user:', error); // Log any errors
+            });
+        fetch('/current-user-classroom')
+            .then(response => response.text()) // Change this to .text() to handle plain text response
+            .then(data => {
+                console.log(data);
+                if (data !== 'Not logged in') {
+                    document.getElementById('classroomDisplay').innerText = data; // Display the name directly
+                } else {
+                    document.getElementById('classroomDisplay').innerText = data; // Update message if no user
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching current user:', error); // Log any errors
+            });
+
+    </script>
+</body>
+
+</html>

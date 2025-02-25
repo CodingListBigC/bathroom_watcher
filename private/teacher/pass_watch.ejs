@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bathroom Watch</title>
+
+    <link rel="stylesheet" href="/css/watcher.css">
+</head>
+
+<body>
+    <%- include('../navbar', { user: user }) %>
+        <div class="main">
+
+            <h1>Bathroom Watch</h1>
+            <div class="grid-container">
+
+            </div>
+        </div>
+        <script>
+            let container = document.querySelector('.grid-container');
+            array.forEach(element => { 
+                const bathroom_div = document.createElement('div');
+                const batrhom_name = document.createElement('h2');
+                batrhom_name.innerHTML = element["name"];
+                bathroom_div.appendChild(batrhom_name);
+
+            });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Centered Navigation Bar</title>
+    </head>
+
+    <body>
+        <%- include('../navbar', { user: user }) %>
+
+        <div class="main">
+                <h2>Add Pass</h2>
+                <p>
+                    You are leaving <%= user.classroom %>. If not
+                    <a href="/student/account"> Change </a>
+                </p>
+                <ul>
+                    <li>
+                        <form action="/student/pass_restroom" method="get">
+                            <button type="submit">Restroom type 1</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="/student/pass_regular" method="get">
+                            <button type="submit">Regular type 2</button>
+                        </form>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </body>
+</html>

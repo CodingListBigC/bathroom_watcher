@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Centered Navigation Bar</title>
+        <link rel="stylesheet" href="/css/main.css" />
+    </head>
+
+    <body>
+        <%- include('../navbar', { user: user }) %>
+
+        <div class="main">
+            <h2>Bathroom Pass Maker</h2>
+            <form id="part1Form" method="post" action="/regular_pass">
+                <p>
+                    Come From - <%= user.classroom %><br />
+                    Going To - <input type="text" name="goingTo" id="goingTo" />
+                </p>
+                <button type="submit">Submit Pass</button>
+            </form>
+        </div>
+    </body>
+</html>
