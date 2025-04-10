@@ -23,10 +23,44 @@ router.get("/classroom", middleware.isLoggedIn, async (req, res) => {
             const classroomData = await Bathroom.getClassroom(
                 req.session.user.classroom
             );
-            console.log(classroomData);
+            // Foramte to make a better Classroom Data
+            classroomDataList = {
+                "boyIn": {
+                    "name": "",
+                    "timeLeft": "",
+                },
+                "girlIn": {
+                    "name": "",
+                    "timeLeft": "",
+                },
+                "boyList": {
+                    "name": "",
+                },
+                "girlList": {
+                    "name": "",
+                },
+            }
+            const boyInPass = Bathroom.getPass(classroomData["boyIn"]);
+            classroomData["boyIn"]["name"] = boyInPass["name"];
+            classroomData["boyIn"]["timeLeft"] = boyInPass["timeLeft"];
+
+            const girlInPass = Bathroom.getPass(classroomData["girlIn"]);
+            classroomData["girlIn"]["name"] = girlInPass["name"];
+            classroomData["girlIn"]["timeLeft"] = girlInPass["timeLeft"];
+            
+            const girlList = classroomData["girlList"].split(",");
+            for (let girlIndex = 0; girlIndex < girlList.length; girlIndex++) {
+                const girlListPerson = girlList[girlIndex];
+                if (classroomDataList["girlList"]["name"] != "") {
+                    classroomDataList["girlList"]["name"] += "<br>";
+                }
+                classroomDataList["girlList"]["name"] += Bathroom.getPass(girlListPerson)["name"];
+            }
+            
+            
             res.render("private/teacher/classroom-manage", {
                 user: req.session.user,
-                classroom: classroomData,
+                classroom: classroomDataList,
             });
         } catch (error) {
             console.error("Error retrieving classroom data:", error);

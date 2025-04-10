@@ -6,37 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bathroom Watch</title>
     <style>
-        /* New grid container */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-    padding: 10px;
-    height: calc(100vh - 130px); /* Adjusted for the navbar */
-    width: 100vw;  /* Full width of the viewport */
-    box-sizing: border-box;
-}
+        .size2 {
+            width: 20%;
+            float: left;
+            text-align: center;
+            font-size: 40px;
 
-/* Grid item styling */
-.grid-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    box-sizing: border-box;
-}
+        }
+        .size1 {
+        float: left;
+        text-align: center;
+        font-size: 40px;
+        height: fit-content;
+        width: 40%;
+        }
 
-/* Media query for screens below 600px (for one column layout) */
-@media (max-width: 600px) {
-    .grid-container {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4, 1fr); /* Adjusts to 4 rows on small screens */
-        height: calc(100vh - 50px); /* Adjusted for the navbar */
-        width: 100vw;
-    }
-}
-
+        /* Clear floats after the columns */
+        #title:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        .boys {
+            background-color: rgb(200, 227, 244);
+        }
+        .girls {
+            background-color: rgb(252, 213, 232);
+        }
     </style>
 </head>
 
@@ -45,26 +41,23 @@
         <div class="main">
 
             <h1>Bathroom Watch</h1>
-            <div class="grid-container">    
-                <div>
-                    Classroom Number:  <%= classroom.roomNumber %>
+            <div id="title">
+                <div id="title">
+                    <div class="boys  size1">Boy</div>
+                    <div class="size2" style="height: 10px;"></div>
+                    <div class="girls  size1">Girls</div>
                 </div>
-                <div>
-                    Classroom Bathroom: <%= classroom.bathroom %>
+                <div class="name">
+                    <div class="boys size1"></div>
+                    <div class="size2">Name</div>
+                    <div class="girls size1">Student Two</div>
                 </div>
-                <div>
-                    People In bathroom
-                    Boys - <%= classroom.boyOut %>
-                    Girls - <%= classroom.girlOut %>
+                <div class="time">
+                    <div class="boys size1">12:45 pm</div>
+                    <div class="size2">Time</div>
+                    <div class="girls size1">11:48 pm</div>
                 </div>
-                <div>
-                    Boy Bathroom List
-                    <%= classroom.boyList%>
-                </div>
-                <div>
-                    Girl Bathroom List
-                    <%= classroom.girlList%>
-                </div>
+                
             </div>
         </div>
 </body>

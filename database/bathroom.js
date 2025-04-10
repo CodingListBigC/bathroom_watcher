@@ -87,29 +87,32 @@ async function updateClassroom() {
             const column = row.sex_type === 0 ? 'boyIn' : 'girlIn';
             const listColumn = row.sex_type === 0 ? 'boyList' : 'girlList';
             await new Promise((resolve, reject) => {
-            db.get(
-                `SELECT ${listColumn} FROM classroom_table WHERE classroom = ?`,
-                [row.classroom],
-                (err, classroomRow) => {
-                if (err) {
-                    console.error("Error retrieving classroom data:", err.message);
-                    return reject(err);
-                }
-                const currentList = classroomRow ? classroomRow[listColumn] : "";
-                const updatedList = currentList ? `${currentList}-${row.username}` : row.username;
-                db.run(
-                    `INSERT OR REPLACE INTO classroom_table (classroom, ${column}, ${listColumn}) VALUES (?, ?, ?)`,
-                    [row.classroom, row.username, updatedList],
-                    (err) => {
-                    if (err) {
-                        console.error("Error inserting into classroom table:", err.message);
-                        return reject(err);
-                    }
-                    resolve();
+                db.get(
+                    `SELECT ${column}, ${listColumn} FROM classroom_table WHERE classroom = ?`,
+                    [row.classroom],
+                    (err, classroomRow) => {
+                        if (err) {
+                            console.error("Error retrieving classroom data:", err.message);
+                            return reject(err);
+                        }
+                        const currentList = classroomRow ? classroomRow[listColumn] : "";
+                        const updatedList = currentList ? `${currentList}-${row.id}` : row.id;
+                        const inList = classroomRow ? classroomRow[column] : "";
+                        // Add this line to set boyIn or girlIn to 0 if it is blank
+                        const updatedInList = inList === "" ? row.id : inList;
+                        db.run(
+                            `INSERT OR REPLACE INTO classroom_table (classroom, ${column}, ${listColumn}) VALUES (?, ?, ?)`,
+                            [row.classroom, updatedInList, updatedList],
+                            (err) => {
+                                if (err) {
+                                    console.error("Error inserting into classroom table:", err.message);
+                                    return reject(err);
+                                }
+                                resolve();
+                            }
+                        );
                     }
                 );
-                }
-            );
             });
         }
 
@@ -118,6 +121,7 @@ async function updateClassroom() {
         console.error("Error updating classroom table:", err.message);
     }
 }
+
 
 // Function to check if a student has an active pass
 async function hasActivePass(username) {
@@ -149,6 +153,36 @@ async function hasActivePass(username) {
     });
 }
 
+async function getPass(passId) {
+    return new Promise((resolve, reject) => {
+        db.get(
+            "SELECT * FROM bathroomUse WHERE id = ?",
+            [passId],
+            (err, row) => {
+                if (err) {
+                    console.error("Error checking active pass:", err.message);
+                    return reject(err);
+                }
+                if (row) {
+                    const pass = {
+                        active: true,
+                        restroom: true,
+                        passId: row.id,
+                        start_time: row.pass_started,
+                        left_time: row.pass_lefted,
+                        end_time: row.pass_ended,
+                    };
+                    console.log(pass); // Log the pass object
+                    resolve(pass);
+                } else {
+                    console.log(null); // Log null if no active pass found
+                    resolve(null);
+                }
+            }
+        );
+    });
+}
+
 // Run updateClassroom every 5 seconds
 setInterval(updateClassroom, 5000);
 
@@ -156,4 +190,5 @@ module.exports = {
     getClassroom,
     updateClassroom,
     hasActivePass,
+    getPass,
 };
